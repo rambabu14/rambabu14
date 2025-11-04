@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./next-js/my-scheduled-app
+        working-directory: /next-js/my-scheduled-app
 
     steps:
       - name: Checkout Code
