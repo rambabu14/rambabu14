@@ -2,6 +2,12 @@ name: Local CI Build Test
 
 on:
   schedule:
+    - cron: "0 13 * * *"  # 6:30 PM IST = 13:00 UTC
+  workflow_dispatch:  # 👈 Add this line
+  push:
+    branches:
+      - main
+  schedule:
     - cron: "0 13 * * *"  # Runs every day at 6:30 PM IST
   push:
     branches:
