@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+   turbopack: {
+    root: "./", // 👈 explicitly tell Next.js that this is the root
+  },
 };
 
 export default nextConfig;
