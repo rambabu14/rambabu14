@@ -1,65 +1,159 @@
-import Image from "next/image";
+// 'use client'; // This directive makes it a client-side component
 
-export default function Home() {
+// import React from 'react';
+// import { Form, Input, Button, Layout, message } from 'antd';
+// import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
+// const { Header, Content } = Layout;
+
+// // Define the type for form values
+// interface LoginFormValues {
+//   username: string;
+//   password: string;
+// }
+
+// const LoginPage: React.FC = () => {
+//   // Function to handle form submission
+//   const onFinish = (values: LoginFormValues) => {
+//     console.log('Received values of form: ', values);
+//     message.success(`Login successful for user: ${values.username}`);
+//   };
+
+//   return (
+//     <Layout style={{ minHeight: '100vh', backgroundColor: '#f0f2f5' }}>
+//       <Header style={{ background: '#001529', color: 'white', textAlign: 'center' }}>
+//         <h2>Scheduled App Deployment Test</h2>
+//       </Header>
+//       <Content style={{ padding: '50px 0', display: 'flex', justifyContent: 'center' }}>
+        
+//         <div style={{ width: 350, padding: 24, background: '#fff', borderRadius: 8, boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+//           <h3>User Login</h3>
+          
+//           <Form
+//             name="normal_login"
+//             className="login-form"
+//             initialValues={{ remember: true }}
+//             onFinish={onFinish}
+//           >
+//             {/* Username Field */}
+//             <Form.Item
+//               name="username"
+//               rules={[{ required: true, message: 'Please input your Username!' }]}
+//             >
+//               <Input 
+//                 prefix={<UserOutlined className="site-form-item-icon" />} 
+//                 placeholder="Username" 
+//               />
+//             </Form.Item>
+            
+//             {/* Password Field */}
+//             <Form.Item
+//               name="password"
+//               rules={[{ required: true, message: 'Please input your Password!' }]}
+//             >
+//               <Input
+//                 prefix={<LockOutlined className="site-form-item-icon" />}
+//                 type="password"
+//                 placeholder="Password"
+//               />
+//             </Form.Item>
+
+//             {/* Submit Button */}
+//             <Form.Item>
+//               <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>
+//                 Log in
+//               </Button>
+//             </Form.Item>
+//           </Form>
+//         </div>
+        
+//       </Content>
+//     </Layout>
+//   );
+// };
+
+// export default LoginPage;
+
+
+'use client'; // Required for Ant Design components in Next.js App Router
+
+import React from 'react';
+import { Layout, Card, Typography, Divider, Tag, Space } from 'antd';
+import { ScheduleOutlined, UserOutlined } from '@ant-design/icons';
+
+const { Header, Content, Footer } = Layout;
+const { Title, Paragraph, Text } = Typography;
+
+const BlogPostPage: React.FC = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Layout style={{ minHeight: '100vh', backgroundColor: '#f0f2f5' }}>
+      
+      {/* Header Section */}
+      <Header style={{ background: '#001529', color: 'white', textAlign: 'center' }}>
+        <Title level={2} style={{ color: 'white', margin: 0 }}>
+          Scheduled CI/CD Blog
+        </Title>
+      </Header>
+      
+      {/* Content Section */}
+      <Content style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+        <Card 
+          style={{ width: '80%', maxWidth: '900px', margin: '20px 0' }}
+          bordered={false}
+        >
+          {/* Post Title */}
+          <Title level={1}>
+            Automating Deployments: Our Scheduled CI/CD Success
+          </Title>
+          
+          {/* Metadata */}
+          <Space size="large" style={{ marginBottom: '20px' }}>
+            <Text type="secondary">
+              <ScheduleOutlined /> November 4, 2025
+            </Text>
+            <Text type="secondary">
+              <UserOutlined /> CI/CD Team
+            </Text>
+            <Tag color="blue">Deployment</Tag>
+            <Tag color="green">Next.js</Tag>
+          </Space>
+          
+          <Divider />
+
+          {/* Post Content */}
+          <Typography>
+            <Paragraph>
+              Welcome to our latest deep dive into operations! Setting up a reliable, scheduled deployment pipeline was a critical step in enhancing our application's stability and ensuring timely updates across all three production servers.
+            </Paragraph>
+
+            <Paragraph>
+              This entire process is triggered by a **GitHub Actions Cron job** set for **12:00 AM UTC**, running the build process on the `build-schedule` branch. Once the `npm run build` succeeds, the resulting artifacts are automatically prepared for deployment.
+            </Paragraph>
+            
+            <Title level={3}>The Three-Server Challenge</Title>
+            <Paragraph>
+              Our primary goal was to ensure uniformity across Server 1 (Primary), Server 2 (Backup), and Server 3 (Testing). By using a single, versioned artifact generated by the successful build, we eliminate "drift"—the difference in code or configuration between servers.
+            </Paragraph>
+            
+            <Title level={3}>Next Steps: Remote Deployment</Title>
+            <Paragraph>
+              The current pipeline successfully builds and archives the project. The final phase, which we are preparing to implement, involves integrating an **SSH deployment step** to securely transfer the built code to all three remote environments and initiate the service restart on each.
+            </Paragraph>
+
+          </Typography>
+          
+          <Divider />
+          <Text strong>Thank you for reading!</Text>
+
+        </Card>
+      </Content>
+      
+      {/* Footer Section */}
+      <Footer style={{ textAlign: 'center', background: '#e6e6e6' }}>
+        Scheduled App ©{new Date().getFullYear()} Created by Gemini AI
+      </Footer>
+    </Layout>
   );
-}
+};
+
+export default BlogPostPage;
