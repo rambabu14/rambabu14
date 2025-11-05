@@ -23,15 +23,9 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Show project structure
-        run: |
-          echo "📂 Listing project files..."
-          ls -la
-          echo "📂 Listing .next directory (if exists)..."
-          ls -la .next || echo ".next not found"
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: next-build
           path: .next
+          if-no-files-found: error
