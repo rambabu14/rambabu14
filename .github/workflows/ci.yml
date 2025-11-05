@@ -6,35 +6,27 @@ on:
 
 jobs:
   build:
-    name: Install, Build & Upload
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js 20
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-           node-version: '20.11.1'
-           check-latest: true
-
-      - name: Cache npm
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: '20'   # Next.js 15+ needs Node >=20.9.0
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./next-js/my-scheduled-app
 
-      - name: Build Next.js app
+      - name: Build project
         run: npm run build
+        working-directory: ./next-js/my-scheduled-app
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: next-build
-          path: .next
+          path: ./next-js/my-scheduled-app/.next
