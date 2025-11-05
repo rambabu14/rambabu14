@@ -13,10 +13,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Use Node.js 18
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+           node-version: '20.11.1'
+           check-latest: true
 
       - name: Cache npm
         uses: actions/cache@v4
