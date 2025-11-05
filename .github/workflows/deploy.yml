@@ -1,18 +1,18 @@
 name: Deploy
 
+# Trigger when CI - build workflow completes successfully
 on:
-  workflow_dispatch: {}
-  schedule:
-    # Every day at 02:00 UTC (07:30 AM IST)
-    - cron: '0 2 * * *'
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["CI - build"]
+    types:
+      - completed
 
 env:
-  LOCAL_TEST: "true" # 👈 Set to false later for real deploy
+  LOCAL_TEST: "true" # 👈 Set false later for real server deploy
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -25,13 +25,17 @@ jobs:
           node-version: '20.11.1'
           check-latest: true
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
+      # 🟢 Automatically download artifact from the CI run that triggered this
+      - name: Download build artifact from CI
+        uses: dawidd6/action-download-artifact@v3
         with:
+          workflow: "CI - build"
+          workflow_conclusion: success
+          run_id: ${{ github.event.workflow_run.id }}
           name: next-build
           path: build_artifact
 
-      - name: Show contents
+      - name: Show artifact contents
         run: ls -la build_artifact || true
 
       - name: Local deploy simulation
@@ -40,8 +44,8 @@ jobs:
           mkdir -p ./local-deploy
           rm -rf ./local-deploy/*
           cp -r build_artifact/. ./local-deploy
-          echo "✅ Build copied to ./local-deploy"
-
+          echo "✅ Local deploy successful. Files in ./local-deploy"
+      
       - name: Real deploy placeholder
         if: env.LOCAL_TEST != 'true'
-        run: echo "Deploy to servers goes here later."
+        run: echo "🚀 Real deployment to servers will go here later."
