@@ -3,21 +3,27 @@ name: Deploy
 on:
   workflow_dispatch: {}
   schedule:
-    # Example: daily at 02:00 UTC. Change cron as required.
+    # Every day at 02:00 UTC (07:30 AM IST)
     - cron: '0 2 * * *'
   push:
     branches: [ "main" ]
 
 env:
-  # Set to "true" when you want to test deploy locally (on runner) instead of real servers.
-  LOCAL_TEST: "true"
+  LOCAL_TEST: "true" # 👈 Set to false later for real deploy
 
 jobs:
-  download-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo (needed for any repo scripts)
+      - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.11.1'
+          check-latest: true
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -25,23 +31,17 @@ jobs:
           name: next-build
           path: build_artifact
 
-      - name: Show artifact contents (debug)
-        run: |
-          ls -la build_artifact || true
+      - name: Show contents
+        run: ls -la build_artifact || true
 
-      - name: Local deploy simulation (copies .next to ./local-deploy)
+      - name: Local deploy simulation
         if: env.LOCAL_TEST == 'true'
         run: |
-          echo "LOCAL_TEST=true -> simulate deploy to local folder"
           mkdir -p ./local-deploy
           rm -rf ./local-deploy/*
-          cp -r build_artifact/.next ./local-deploy
-          echo "Build copied to ./local-deploy/.next"
-          echo "You can inspect ./local-deploy on the runner workspace"
+          cp -r build_artifact/. ./local-deploy
+          echo "✅ Build copied to ./local-deploy"
 
-      - name: Deploy to servers (placeholder)
+      - name: Real deploy placeholder
         if: env.LOCAL_TEST != 'true'
-        run: |
-          echo "Deploy to actual servers should go here."
-          echo "Use rsync or scp to copy build_artifact/.next to your servers and restart service."
-          exit 1
+        run: echo "Deploy to servers goes here later."
