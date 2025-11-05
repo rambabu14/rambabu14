@@ -15,13 +15,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'   # Next.js requires >= 20.9.0
+          node-version: '20'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build project
         run: npm run build
+
+      - name: Show project structure
+        run: |
+          echo "📂 Listing project files..."
+          ls -la
+          echo "📂 Listing .next directory (if exists)..."
+          ls -la .next || echo ".next not found"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
